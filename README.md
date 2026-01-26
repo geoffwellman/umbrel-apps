@@ -12,7 +12,7 @@ Add this repo as a community app store in Umbrel:
 
 | App | Description |
 |-----|-------------|
-| [Clawdbot](./clawdbot) | Personal AI assistant with WhatsApp, Telegram, Discord support |
+| [Clawdbot](./geoffwellman-geoffwellman-clawdbot) | Personal AI assistant with WhatsApp, Telegram, Discord support |
 
 ## Updating Apps
 
@@ -28,7 +28,7 @@ After a new image is built:
 
 ```bash
 # SSH into your Umbrel, then:
-~/umbrel/scripts/app update clawdbot
+~/umbrel/scripts/app update geoffwellman-clawdbot
 ```
 
 Or via the Umbrel web UI: Open the app → Settings → Check for Updates
@@ -42,7 +42,7 @@ To force a rebuild without code changes:
 ### Version Bumps
 
 When releasing a new version with release notes:
-1. Edit `clawdbot/umbrel-app.yml`
+1. Edit `geoffwellman-clawdbot/umbrel-app.yml`
 2. Update `version` field
 3. Update `releaseNotes` field
 4. Commit and push
@@ -61,7 +61,7 @@ When releasing a new version with release notes:
 
 ```
 umbrel-apps/
-├── clawdbot/
+├── geoffwellman-clawdbot/
 │   ├── Dockerfile
 │   ├── docker-compose.yml
 │   ├── umbrel-app.yml
