@@ -69,12 +69,12 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go (for sag TTS)
-ENV GOLANG_VERSION=1.22.0
+ENV GOLANG_VERSION=1.24.0
 RUN curl -fsSL "https://go.dev/dl/go${GOLANG_VERSION}.linux-$(dpkg --print-architecture).tar.gz" | tar -C /usr/local -xz
 ENV PATH="/usr/local/go/bin:/root/go/bin:${PATH}"
 
 # Install sag (ElevenLabs TTS CLI)
-RUN go install github.com/steipete/sag@latest
+RUN go install github.com/steipete/sag/cmd/sag@latest
 
 # Install uv (fast Python package manager for MCP tools)
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
