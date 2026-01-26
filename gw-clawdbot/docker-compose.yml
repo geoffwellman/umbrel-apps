@@ -49,4 +49,4 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/config:/root/.clawdbot
       - ${APP_DATA_DIR}/data/workspace:/root/clawd
-    command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "18789", "--allow-unconfigured", "--allow-insecure-auth"]
+    command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "18789", "--allow-unconfigured"]
