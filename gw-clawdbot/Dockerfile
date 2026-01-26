@@ -102,6 +102,7 @@ RUN corepack enable
 FROM deps AS builder
 
 WORKDIR /app
+ENV CI=true
 
 # Clone and build Clawdbot
 ARG CLAWDBOT_VERSION=main
