@@ -14,6 +14,39 @@ Add this repo as a community app store in Umbrel:
 |-----|-------------|
 | [Clawdbot](./clawdbot) | Personal AI assistant with WhatsApp, Telegram, Discord support |
 
+## Updating Apps
+
+### Automatic Updates
+
+Docker images rebuild automatically:
+- **On push** to `main` branch (when app files change)
+- **Weekly** on Sundays at midnight UTC
+
+### Manual Update on Your Umbrel
+
+After a new image is built:
+
+```bash
+# SSH into your Umbrel, then:
+~/umbrel/scripts/app update clawdbot
+```
+
+Or via the Umbrel web UI: Open the app → Settings → Check for Updates
+
+### Triggering a Rebuild
+
+To force a rebuild without code changes:
+1. Go to GitHub → Actions → "Build Docker Images"
+2. Click "Run workflow" → "Run workflow"
+
+### Version Bumps
+
+When releasing a new version with release notes:
+1. Edit `clawdbot/umbrel-app.yml`
+2. Update `version` field
+3. Update `releaseNotes` field
+4. Commit and push
+
 ## Adding a New App
 
 1. Create a folder with your app name (e.g., `my-app/`)
