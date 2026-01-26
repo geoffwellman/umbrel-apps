@@ -12,6 +12,11 @@ echo "============================================"
 # Start Xvfb for headless browser support
 if [ "${ENABLE_BROWSER:-true}" = "true" ]; then
     echo "Starting Xvfb virtual display..."
+    # Clean up any existing Xvfb processes and lock files from previous runs
+    pkill -9 Xvfb 2>/dev/null || true
+    rm -f /tmp/.X99-lock 2>/dev/null || true
+    rm -rf /tmp/.X11-unix/X99 2>/dev/null || true
+    sleep 1
     Xvfb :99 -screen 0 1920x1080x24 -ac &
     export DISPLAY=:99
 fi
