@@ -84,7 +84,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
 # Install OpenAI Whisper (speech-to-text)
-RUN uv pip install --system openai-whisper
+RUN uv pip install --system --break-system-packages openai-whisper
 
 # Install mcporter (MCP server management)
 RUN npm install -g mcporter
