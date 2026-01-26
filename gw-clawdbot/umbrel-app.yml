@@ -2,7 +2,7 @@ manifestVersion: 1
 id: gw-clawdbot
 name: Clawdbot
 tagline: Your own personal AI assistant
-icon: https://raw.githubusercontent.com/clawdbot/clawdbot/main/ui/public/lobster.png
+icon: https://raw.githubusercontent.com/geoffwellman/umbrel-apps/main/gw-clawdbot/icon.png
 category: ai
 version: "2026.1.23"
 port: 18789
