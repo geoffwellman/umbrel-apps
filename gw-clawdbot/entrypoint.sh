@@ -12,33 +12,25 @@ echo "============================================"
 # Ensure config directory exists and set insecure auth for HTTP access
 mkdir -p "$HOME/.clawdbot"
 
-# Create/update both YAML and JSON configs to ensure clawdbot finds the setting
-CONFIG_YML="$HOME/.clawdbot/config.yml"
-CONFIG_JSON="$HOME/.clawdbot/config.json"
+# The config file is clawdbot.json (not config.yml or config.json)
+CONFIG_FILE="$HOME/.clawdbot/clawdbot.json"
 
-echo "Setting up config with HTTP access enabled..."
-
-# Always write config to ensure allowInsecureAuth is set
-cat > "$CONFIG_YML" << 'EOF'
-# Clawdbot Configuration (auto-generated for Umbrel)
-gateway:
-  mode: local
-  controlUi:
-    allowInsecureAuth: true
-EOF
-
-cat > "$CONFIG_JSON" << 'EOF'
+# Only create if it doesn't exist (preserve user settings)
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Creating default config with HTTP access enabled..."
+    cat > "$CONFIG_FILE" << 'EOF'
 {
   "gateway": {
-    "mode": "local",
     "controlUi": {
       "allowInsecureAuth": true
     }
   }
 }
 EOF
-
-echo "Config files created at $CONFIG_YML and $CONFIG_JSON"
+    echo "Config created at $CONFIG_FILE"
+else
+    echo "Config exists at $CONFIG_FILE"
+fi
 
 # Start Xvfb for headless browser support
 if [ "${ENABLE_BROWSER:-true}" = "true" ]; then
