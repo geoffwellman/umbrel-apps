@@ -17,6 +17,7 @@ services:
       NODE_ENV: production
       CLAWDBOT_GATEWAY_TOKEN: ${APP_SEED}
       CLAWDBOT_GATEWAY_BIND: lan
+      CLAWDBOT_ALLOW_INSECURE_AUTH: ${CLAWDBOT_ALLOW_INSECURE_AUTH:-true}
       
       # LLM Providers (set at least one)
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}

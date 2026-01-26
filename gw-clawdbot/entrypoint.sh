@@ -9,6 +9,20 @@ set -e
 echo "=== Clawdbot Starting ==="
 echo "============================================"
 
+# Create default config if it doesn't exist (allow HTTP access for Umbrel)
+CONFIG_FILE="$HOME/.clawdbot/config.yml"
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Creating default config with HTTP access enabled..."
+    mkdir -p "$HOME/.clawdbot"
+    cat > "$CONFIG_FILE" << 'EOF'
+# Clawdbot Configuration (auto-generated for Umbrel)
+gateway:
+  mode: local
+  controlUi:
+    allowInsecureAuth: true
+EOF
+fi
+
 # Start Xvfb for headless browser support
 if [ "${ENABLE_BROWSER:-true}" = "true" ]; then
     echo "Starting Xvfb virtual display..."
