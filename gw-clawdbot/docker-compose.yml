@@ -1,13 +1,13 @@
 services:
   app_proxy:
     environment:
-      APP_HOST: geoffwellman-clawdbot_gateway_1
+      APP_HOST: gw-clawdbot_gateway_1
       APP_PORT: 18789
     image: getumbrel/app-proxy:1.0.0@sha256:c402441f880113b992859f8f55565b05c04f618df4f5c355c9e3591eb0cbe81c
     restart: on-failure
 
   gateway:
-    image: ghcr.io/geoffwellman/geoffwellman-clawdbot-umbrel:latest
+    image: ghcr.io/geoffwellman/gw-clawdbot-umbrel:latest
     restart: unless-stopped
     ports:
       - "18789:18789"

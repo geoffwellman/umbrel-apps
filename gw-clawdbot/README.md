@@ -102,22 +102,22 @@ Run CLI commands via docker exec:
 
 ```bash
 # Check status
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js status
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js status
 
 # Run onboarding wizard
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js onboard
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js onboard
 
 # Login to WhatsApp (scan QR)
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js channels login
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels login
 
 # Add Telegram bot
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js channels add --channel telegram --token "YOUR_TOKEN"
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels add --channel telegram --token "YOUR_TOKEN"
 
 # Check health
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js health
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js health
 
 # Run doctor
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js doctor
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js doctor
 ```
 
 ## Using with Local Models (Ollama)
@@ -144,7 +144,7 @@ The image includes Tailscale. To enable Tailscale Serve:
 
 1. SSH into Umbrel and exec into the container:
    ```bash
-   docker exec -it geoffwellman-clawdbot_gateway_1 bash
+   docker exec -it gw-clawdbot_gateway_1 bash
    ```
 
 2. Authenticate with Tailscale:
@@ -177,24 +177,24 @@ The image includes Tailscale. To enable Tailscale Serve:
 
 **Gateway won't start:**
 ```bash
-docker logs geoffwellman-clawdbot_gateway_1
+docker logs gw-clawdbot_gateway_1
 ```
 
 **Reset configuration:**
 ```bash
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js reset --config
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js reset --config
 ```
 
 **WhatsApp not connecting:**
 ```bash
 # Re-scan QR code
-docker exec -it geoffwellman-clawdbot_gateway_1 node dist/index.js channels login
+docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels login
 ```
 
 **Browser tool not working:**
 ```bash
 # Check if xvfb is running
-docker exec -it geoffwellman-clawdbot_gateway_1 ps aux | grep Xvfb
+docker exec -it gw-clawdbot_gateway_1 ps aux | grep Xvfb
 ```
 
 ## Image Size

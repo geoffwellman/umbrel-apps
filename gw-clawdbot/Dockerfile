@@ -46,6 +46,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iproute2 \
     # Build tools
     build-essential \
+    pkg-config \
+    # Audio dev libraries (for sag TTS)
+    libasound2-dev \
     # Python for whisper/uv
     python3 \
     python3-pip \
