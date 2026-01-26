@@ -1,0 +1,42 @@
+manifestVersion: 1
+id: clawdbot
+name: Clawdbot
+tagline: Your own personal AI assistant
+icon: https://raw.githubusercontent.com/clawdbot/clawdbot/main/ui/public/lobster.png
+category: ai
+version: "2026.1.23"
+port: 18789
+description: >-
+  Clawdbot is a personal AI assistant that connects to your messaging apps
+  (WhatsApp, Telegram, Discord, Slack, Signal, and more). It runs locally on
+  your Umbrel and gives you a private, always-on AI assistant.
+  
+  
+  Features:
+  
+  - Multi-channel inbox (WhatsApp, Telegram, Discord, Slack, Signal, iMessage)
+  
+  - Voice and text support
+  
+  - Browser automation tools
+  
+  - Sandboxed tool execution
+  
+  - Web search capabilities
+  
+  - Works with Anthropic Claude, OpenAI, and local models
+developer: Peter Steinberger & Community
+website: https://clawd.bot
+repo: https://github.com/clawdbot/clawdbot
+support: https://github.com/clawdbot/clawdbot/discussions
+gallery:
+  - https://raw.githubusercontent.com/clawdbot/clawdbot/main/docs/images/control-ui.png
+releaseNotes: >-
+  Initial Umbrel release. Includes gateway with Control UI, WhatsApp/Telegram/Discord
+  support, browser automation, and Tailscale integration.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: Geoff Wellman
+submission: https://github.com/getumbrel/umbrel-apps
