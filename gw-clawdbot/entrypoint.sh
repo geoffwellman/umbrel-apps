@@ -80,7 +80,15 @@ fi
 
 echo "============================================"
 
-# Start Tailscale if auth key is provided
+# Read Tailscale auth key from env var OR from persistent config file
+# Config file survives updates: ~/umbrel/app-data/gw-clawdbot/data/config/tailscale.env
+TS_ENV_FILE="$HOME/.clawdbot/tailscale.env"
+if [ -z "${TAILSCALE_AUTHKEY:-}" ] && [ -f "$TS_ENV_FILE" ]; then
+    echo "Loading Tailscale config from $TS_ENV_FILE"
+    . "$TS_ENV_FILE"
+fi
+
+# Start Tailscale if auth key is available (from env or config file)
 if [ -n "${TAILSCALE_AUTHKEY:-}" ]; then
     echo "Starting Tailscale..."
     tailscaled --state=/root/.clawdbot/tailscale/ --socket=/var/run/tailscale/tailscaled.sock &
@@ -94,7 +102,9 @@ if [ -n "${TAILSCALE_AUTHKEY:-}" ]; then
         echo "Tailscale Serve: HTTPS enabled"
     fi
 else
-    echo "Tailscale: not configured (set TAILSCALE_AUTHKEY to enable)"
+    echo "Tailscale: not configured"
+    echo "  To enable, create: ~/umbrel/app-data/gw-clawdbot/data/config/tailscale.env"
+    echo "  With: TAILSCALE_AUTHKEY=tskey-auth-YOUR_KEY_HERE"
 fi
 
 echo "============================================"
