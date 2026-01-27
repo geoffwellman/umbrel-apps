@@ -51,11 +51,6 @@ services:
       TAILSCALE_HOSTNAME: ${TAILSCALE_HOSTNAME:-clawdbot}
       TAILSCALE_SERVE: ${TAILSCALE_SERVE:-true}
 
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    devices:
-      - /dev/net/tun:/dev/net/tun
     volumes:
       - ${APP_DATA_DIR}/data/config:/root/.clawdbot
       - ${APP_DATA_DIR}/data/workspace:/root/clawd

@@ -90,9 +90,10 @@ fi
 
 # Start Tailscale if auth key is available (from env or config file)
 if [ -n "${TAILSCALE_AUTHKEY:-}" ]; then
-    echo "Starting Tailscale..."
-    tailscaled --state=/root/.clawdbot/tailscale/ --socket=/var/run/tailscale/tailscaled.sock &
-    sleep 2
+    echo "Starting Tailscale (userspace mode)..."
+    mkdir -p /var/run/tailscale
+    tailscaled --state=/root/.clawdbot/tailscale/ --socket=/var/run/tailscale/tailscaled.sock --tun=userspace-networking &
+    sleep 3
     tailscale up --authkey="$TAILSCALE_AUTHKEY" --hostname="${TAILSCALE_HOSTNAME:-clawdbot}"
     echo "Tailscale: $(tailscale ip -4 2>/dev/null || echo 'connecting...')"
 
