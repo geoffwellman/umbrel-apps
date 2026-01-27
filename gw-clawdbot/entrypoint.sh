@@ -92,15 +92,25 @@ fi
 if [ -n "${TAILSCALE_AUTHKEY:-}" ]; then
     echo "Starting Tailscale (userspace mode)..."
     mkdir -p /var/run/tailscale
-    tailscaled --state=/root/.clawdbot/tailscale/ --socket=/var/run/tailscale/tailscaled.sock --tun=userspace-networking &
+    # Clean up if previous run created state as a directory
+    if [ -d "/root/.clawdbot/tailscale.state" ]; then
+        rm -rf /root/.clawdbot/tailscale.state
+    fi
+    # Also clean up old directory-style state
+    if [ -d "/root/.clawdbot/tailscale" ]; then
+        rm -rf /root/.clawdbot/tailscale
+    fi
+    tailscaled --state=/root/.clawdbot/tailscale.state --socket=/var/run/tailscale/tailscaled.sock --tun=userspace-networking &
     sleep 3
-    tailscale up --authkey="$TAILSCALE_AUTHKEY" --hostname="${TAILSCALE_HOSTNAME:-clawdbot}"
-    echo "Tailscale: $(tailscale ip -4 2>/dev/null || echo 'connecting...')"
-
-    # Set up Tailscale Serve for HTTPS if requested
-    if [ "${TAILSCALE_SERVE:-true}" = "true" ]; then
-        tailscale serve --bg https / http://localhost:18789 2>/dev/null || true
-        echo "Tailscale Serve: HTTPS enabled"
+    if tailscale up --authkey="$TAILSCALE_AUTHKEY" --hostname="${TAILSCALE_HOSTNAME:-clawdbot}" 2>&1; then
+        echo "Tailscale: $(tailscale ip -4 2>/dev/null || echo 'connecting...')"
+        # Set up Tailscale Serve for HTTPS if requested
+        if [ "${TAILSCALE_SERVE:-true}" = "true" ]; then
+            tailscale serve --bg https / http://localhost:18789 2>/dev/null || true
+            echo "Tailscale Serve: HTTPS enabled"
+        fi
+    else
+        echo "Tailscale: failed to start (clawdbot will continue without it)"
     fi
 else
     echo "Tailscale: not configured"
