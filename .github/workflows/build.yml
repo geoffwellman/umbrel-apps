@@ -23,12 +23,28 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.app == '' || github.event.inputs.app == 'gw-clawdbot' }}
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Sync clawdbot version
+        run: |
+          # Fetch latest clawdbot version from upstream package.json
+          UPSTREAM_VERSION=$(curl -s https://raw.githubusercontent.com/clawdbot/clawdbot/main/package.json | jq -r '.version')
+          CURRENT_VERSION=$(grep '^version:' gw-clawdbot/umbrel-app.yml | sed 's/version: *"\(.*\)"/\1/')
+          echo "Upstream: $UPSTREAM_VERSION | Current: $CURRENT_VERSION"
+          if [ "$UPSTREAM_VERSION" != "$CURRENT_VERSION" ] && [ -n "$UPSTREAM_VERSION" ] && [ "$UPSTREAM_VERSION" != "null" ]; then
+            sed -i "s/^version: .*/version: \"$UPSTREAM_VERSION\"/" gw-clawdbot/umbrel-app.yml
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add gw-clawdbot/umbrel-app.yml
+            git commit -m "Sync clawdbot version to $UPSTREAM_VERSION" || true
+            git push || true
+            echo "VERSION_UPDATED=true" >> $GITHUB_ENV
+          fi
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
