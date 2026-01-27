@@ -80,5 +80,24 @@ fi
 
 echo "============================================"
 
+# Start Tailscale if auth key is provided
+if [ -n "${TAILSCALE_AUTHKEY:-}" ]; then
+    echo "Starting Tailscale..."
+    tailscaled --state=/root/.clawdbot/tailscale/ --socket=/var/run/tailscale/tailscaled.sock &
+    sleep 2
+    tailscale up --authkey="$TAILSCALE_AUTHKEY" --hostname="${TAILSCALE_HOSTNAME:-clawdbot}"
+    echo "Tailscale: $(tailscale ip -4 2>/dev/null || echo 'connecting...')"
+
+    # Set up Tailscale Serve for HTTPS if requested
+    if [ "${TAILSCALE_SERVE:-true}" = "true" ]; then
+        tailscale serve --bg https / http://localhost:18789 2>/dev/null || true
+        echo "Tailscale Serve: HTTPS enabled"
+    fi
+else
+    echo "Tailscale: not configured (set TAILSCALE_AUTHKEY to enable)"
+fi
+
+echo "============================================"
+
 # Run the main command
 exec "$@"

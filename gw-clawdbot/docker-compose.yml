@@ -45,7 +45,17 @@ services:
       
       # Web search
       BRAVE_API_KEY: ${BRAVE_API_KEY:-}
-      
+
+      # Tailscale (generate auth key at https://login.tailscale.com/admin/settings/keys)
+      TAILSCALE_AUTHKEY: ${TAILSCALE_AUTHKEY:-}
+      TAILSCALE_HOSTNAME: ${TAILSCALE_HOSTNAME:-clawdbot}
+      TAILSCALE_SERVE: ${TAILSCALE_SERVE:-true}
+
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    devices:
+      - /dev/net/tun:/dev/net/tun
     volumes:
       - ${APP_DATA_DIR}/data/config:/root/.clawdbot
       - ${APP_DATA_DIR}/data/workspace:/root/clawd
