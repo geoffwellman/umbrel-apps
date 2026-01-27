@@ -38,6 +38,12 @@ RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/clawdbot
     && pnpm prune --prod \
     && rm -rf /root/.npm /root/.cache /tmp/* .git
 
+# Link clawdbot CLI so the agent can run 'clawdbot' as a command
+RUN pnpm link --global 2>/dev/null || ln -sf /app/dist/index.js /usr/local/bin/clawdbot
+
+# Install Claude Code
+RUN npm install -g @anthropic-ai/claude-code
+
 # Environment configuration
 ENV NODE_ENV=production
 ENV HOME=/root
