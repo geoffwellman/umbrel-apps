@@ -4,7 +4,7 @@ name: Clawdbot
 tagline: Your own personal AI assistant
 icon: https://raw.githubusercontent.com/geoffwellman/umbrel-apps/main/gw-clawdbot/icon.png
 category: ai
-version: "2026.1.26"
+version: "2026.1.27-beta.1"
 port: 18789
 description: >-
   Clawdbot is a personal AI assistant that connects to your messaging apps
