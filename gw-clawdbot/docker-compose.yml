@@ -52,8 +52,5 @@ services:
       TAILSCALE_SERVE: ${TAILSCALE_SERVE:-true}
 
     volumes:
-      - ${APP_DATA_DIR}/data/config:/root/.clawdbot
-      - ${APP_DATA_DIR}/data/workspace:/root/clawd
-      - ${APP_DATA_DIR}/data/projects:/root/Projects
-      - ${APP_DATA_DIR}/data/claude:/root/.claude
+      - ${APP_DATA_DIR}/data/home:/root
     command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "18789", "--allow-unconfigured"]
