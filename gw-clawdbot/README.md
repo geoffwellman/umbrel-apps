@@ -196,18 +196,17 @@ The image includes Tailscale. To enable Tailscale Serve:
 
 4. Restart the container
 
-**Note:** Tailscale device identity and state are persisted in `${APP_DATA_DIR}/data/tailscale`, so you won't need to re-authenticate after container restarts.
+**Note:** Tailscale device identity and state are already persisted in `${APP_DATA_DIR}/data/config` (as `/root/.clawdbot/tailscale.state`), so you won't need to re-authenticate after container restarts.
 
 ## Data Directories
 
 | Path | Purpose |
 |------|---------|
-| `${APP_DATA_DIR}/data/config` | Configuration, credentials, sessions |
+| `${APP_DATA_DIR}/data/config` | Configuration, credentials, sessions, Tailscale state |
 | `${APP_DATA_DIR}/data/workspace` | Workspace, memory, skills |
 | `${APP_DATA_DIR}/data/projects` | Projects directory |
 | `${APP_DATA_DIR}/data/claude` | Claude Code configuration |
 | `${APP_DATA_DIR}/data/wacli` | wacli WhatsApp data (auth, message history, contacts) |
-| `${APP_DATA_DIR}/data/tailscale` | Tailscale VPN state and device identity |
 | `${APP_DATA_DIR}/data/gh` | GitHub CLI authentication and settings |
 
 ## Troubleshooting

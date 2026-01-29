@@ -57,6 +57,5 @@ services:
       - ${APP_DATA_DIR}/data/projects:/root/Projects
       - ${APP_DATA_DIR}/data/claude:/root/.claude
       - ${APP_DATA_DIR}/data/wacli:/root/.wacli
-      - ${APP_DATA_DIR}/data/tailscale:/var/lib/tailscale
       - ${APP_DATA_DIR}/data/gh:/root/.config/gh
     command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "18789", "--allow-unconfigured"]
