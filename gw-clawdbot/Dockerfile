@@ -31,16 +31,21 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | t
     && apt-get install -y gh \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Go for building wacli
-RUN curl -fsSL https://go.dev/dl/go1.23.5.linux-amd64.tar.gz | tar -C /usr/local -xz
-ENV PATH="/usr/local/go/bin:${PATH}"
-
-# Install wacli (WhatsApp CLI)
-RUN git clone --depth 1 https://github.com/moltbot/wacli.git /tmp/wacli \
+# Install Go, build wacli, then remove Go to minimize image size
+RUN ARCH="$(dpkg --print-architecture)" \
+    && case "${ARCH}" in \
+        amd64) GO_ARCH='amd64' ;; \
+        arm64) GO_ARCH='arm64' ;; \
+        *) echo "Unsupported architecture: ${ARCH}" && exit 1 ;; \
+    esac \
+    && curl -fsSL "https://go.dev/dl/go1.23.5.linux-${GO_ARCH}.tar.gz" | tar -C /usr/local -xz \
+    && export PATH="/usr/local/go/bin:${PATH}" \
+    && git clone --depth 1 https://github.com/moltbot/wacli.git /tmp/wacli \
     && cd /tmp/wacli \
+    && git checkout cc6a7a3cd9dce3a723751564d4d6c73d825ddfde \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
-    && chmod +x /usr/local/bin/wacli \
-    && rm -rf /tmp/wacli
+    && cd / \
+    && rm -rf /tmp/wacli /usr/local/go /root/.cache/go-build
 
 # Enable corepack for pnpm
 RUN corepack enable
