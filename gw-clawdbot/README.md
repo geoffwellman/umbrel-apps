@@ -15,6 +15,7 @@ Personal AI assistant for Umbrel. Connects to WhatsApp, Telegram, Discord, Slack
 | **mcporter** | MCP server management |
 | **uv/uvx** | Python tool runner |
 | **gh** | GitHub CLI |
+| **wacli** | WhatsApp CLI for syncing, searching, and sending messages |
 | **Tailscale** | Remote access and Tailscale Serve |
 | **ripgrep** | Fast search |
 | **xvfb** | Virtual framebuffer for headless browsers |
@@ -119,6 +120,35 @@ docker exec -it gw-clawdbot_gateway_1 node dist/index.js health
 # Run doctor
 docker exec -it gw-clawdbot_gateway_1 node dist/index.js doctor
 ```
+
+### Using wacli (WhatsApp CLI)
+
+wacli is included for advanced WhatsApp management from the command line:
+
+```bash
+# Authenticate with WhatsApp (shows QR code)
+docker exec -it gw-clawdbot_gateway_1 wacli auth
+
+# Start sync mode to continuously sync messages
+docker exec -it gw-clawdbot_gateway_1 wacli sync --follow
+
+# Search messages
+docker exec -it gw-clawdbot_gateway_1 wacli messages search "meeting"
+
+# Send a text message
+docker exec -it gw-clawdbot_gateway_1 wacli send text --to 1234567890 --message "hello"
+
+# Send a file
+docker exec -it gw-clawdbot_gateway_1 wacli send file --to 1234567890 --file /path/to/file.jpg --caption "photo"
+
+# List groups
+docker exec -it gw-clawdbot_gateway_1 wacli groups list
+
+# Run diagnostics
+docker exec -it gw-clawdbot_gateway_1 wacli doctor
+```
+
+**Note:** wacli stores its data in `~/.wacli` by default. This is separate from the Clawdbot WhatsApp integration.
 
 ## Using with Local Models (Ollama)
 
