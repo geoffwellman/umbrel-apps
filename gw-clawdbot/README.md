@@ -103,22 +103,22 @@ Run CLI commands via docker exec:
 
 ```bash
 # Check status
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js status
+docker exec -it gw-clawdbot_gateway_1 clawdbot status
 
 # Run onboarding wizard
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js onboard
+docker exec -it gw-clawdbot_gateway_1 clawdbot onboard
 
 # Login to WhatsApp (scan QR)
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels login
+docker exec -it gw-clawdbot_gateway_1 clawdbot channels login
 
 # Add Telegram bot
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels add --channel telegram --token "YOUR_TOKEN"
+docker exec -it gw-clawdbot_gateway_1 clawdbot channels add --channel telegram --token "YOUR_TOKEN"
 
 # Check health
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js health
+docker exec -it gw-clawdbot_gateway_1 clawdbot health
 
 # Run doctor
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js doctor
+docker exec -it gw-clawdbot_gateway_1 clawdbot doctor
 ```
 
 ### Using wacli (WhatsApp CLI)
@@ -218,13 +218,13 @@ docker logs gw-clawdbot_gateway_1
 
 **Reset configuration:**
 ```bash
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js reset --config
+docker exec -it gw-clawdbot_gateway_1 clawdbot reset --config
 ```
 
 **WhatsApp not connecting:**
 ```bash
 # Re-scan QR code
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels login
+docker exec -it gw-clawdbot_gateway_1 clawdbot channels login
 ```
 
 **Browser tool not working:**
