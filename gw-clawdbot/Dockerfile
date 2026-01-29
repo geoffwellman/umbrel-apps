@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xvfb \
     iptables \
     iproute2 \
+    ripgrep \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Tailscale
