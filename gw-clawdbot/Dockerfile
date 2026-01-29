@@ -40,12 +40,12 @@ RUN ARCH="$(dpkg --print-architecture)" \
     esac \
     && curl -fsSL "https://go.dev/dl/go1.23.5.linux-${GO_ARCH}.tar.gz" | tar -C /usr/local -xz \
     && export PATH="/usr/local/go/bin:${PATH}" \
-    && git clone --depth 1 https://github.com/moltbot/wacli.git /tmp/wacli \
+    && git clone https://github.com/moltbot/wacli.git /tmp/wacli \
     && cd /tmp/wacli \
     && git checkout cc6a7a3cd9dce3a723751564d4d6c73d825ddfde \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
     && cd / \
-    && rm -rf /tmp/wacli /usr/local/go /root/.cache/go-build
+    && rm -rf /tmp/wacli /usr/local/go /root/.cache/go-build /root/go
 
 # Enable corepack for pnpm
 RUN corepack enable
