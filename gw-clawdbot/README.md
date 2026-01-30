@@ -15,6 +15,7 @@ Personal AI assistant for Umbrel. Connects to WhatsApp, Telegram, Discord, Slack
 | **mcporter** | MCP server management |
 | **uv/uvx** | Python tool runner |
 | **gh** | GitHub CLI |
+| **wacli** | WhatsApp CLI for syncing, searching, and sending messages |
 | **Tailscale** | Remote access and Tailscale Serve |
 | **ripgrep** | Fast search |
 | **xvfb** | Virtual framebuffer for headless browsers |
@@ -102,23 +103,52 @@ Run CLI commands via docker exec:
 
 ```bash
 # Check status
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js status
+docker exec -it gw-clawdbot_gateway_1 clawdbot status
 
 # Run onboarding wizard
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js onboard
+docker exec -it gw-clawdbot_gateway_1 clawdbot onboard
 
 # Login to WhatsApp (scan QR)
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels login
+docker exec -it gw-clawdbot_gateway_1 clawdbot channels login
 
 # Add Telegram bot
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels add --channel telegram --token "YOUR_TOKEN"
+docker exec -it gw-clawdbot_gateway_1 clawdbot channels add --channel telegram --token "YOUR_TOKEN"
 
 # Check health
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js health
+docker exec -it gw-clawdbot_gateway_1 clawdbot health
 
 # Run doctor
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js doctor
+docker exec -it gw-clawdbot_gateway_1 clawdbot doctor
 ```
+
+### Using wacli (WhatsApp CLI)
+
+wacli is included for advanced WhatsApp management from the command line:
+
+```bash
+# Authenticate with WhatsApp (shows QR code)
+docker exec -it gw-clawdbot_gateway_1 wacli auth
+
+# Start sync mode to continuously sync messages
+docker exec -it gw-clawdbot_gateway_1 wacli sync --follow
+
+# Search messages
+docker exec -it gw-clawdbot_gateway_1 wacli messages search "meeting"
+
+# Send a text message
+docker exec -it gw-clawdbot_gateway_1 wacli send text --to 1234567890 --message "hello"
+
+# Send a file
+docker exec -it gw-clawdbot_gateway_1 wacli send file --to 1234567890 --file /path/to/file.jpg --caption "photo"
+
+# List groups
+docker exec -it gw-clawdbot_gateway_1 wacli groups list
+
+# Run diagnostics
+docker exec -it gw-clawdbot_gateway_1 wacli doctor
+```
+
+**Note:** wacli data (authentication, message history, contacts) is persisted in `${APP_DATA_DIR}/data/wacli` and mapped to `/root/.wacli` in the container.
 
 ## Using with Local Models (Ollama)
 
@@ -166,12 +196,18 @@ The image includes Tailscale. To enable Tailscale Serve:
 
 4. Restart the container
 
+**Note:** Tailscale device identity and state are already persisted in `${APP_DATA_DIR}/data/config` (as `/root/.clawdbot/tailscale.state`), so you won't need to re-authenticate after container restarts.
+
 ## Data Directories
 
 | Path | Purpose |
 |------|---------|
-| `${APP_DATA_DIR}/data/config` | Configuration, credentials, sessions |
+| `${APP_DATA_DIR}/data/config` | Configuration, credentials, sessions, Tailscale state |
 | `${APP_DATA_DIR}/data/workspace` | Workspace, memory, skills |
+| `${APP_DATA_DIR}/data/projects` | Projects directory |
+| `${APP_DATA_DIR}/data/claude` | Claude Code configuration |
+| `${APP_DATA_DIR}/data/wacli` | wacli WhatsApp data (auth, message history, contacts) |
+| `${APP_DATA_DIR}/data/gh` | GitHub CLI authentication and settings |
 
 ## Troubleshooting
 
@@ -182,13 +218,13 @@ docker logs gw-clawdbot_gateway_1
 
 **Reset configuration:**
 ```bash
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js reset --config
+docker exec -it gw-clawdbot_gateway_1 clawdbot reset --config
 ```
 
 **WhatsApp not connecting:**
 ```bash
 # Re-scan QR code
-docker exec -it gw-clawdbot_gateway_1 node dist/index.js channels login
+docker exec -it gw-clawdbot_gateway_1 clawdbot channels login
 ```
 
 **Browser tool not working:**
