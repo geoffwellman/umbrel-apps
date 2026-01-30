@@ -50,6 +50,9 @@ RUN ARCH="$(dpkg --print-architecture)" \
 # Enable corepack for pnpm
 RUN corepack enable
 
+# Install bun globally
+RUN npm install -g bun
+
 WORKDIR /app
 ENV CI=true
 

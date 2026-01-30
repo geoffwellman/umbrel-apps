@@ -203,8 +203,7 @@ The image includes Tailscale. To enable Tailscale Serve:
 | Path | Purpose |
 |------|---------|
 | `${APP_DATA_DIR}/data/config` | Configuration, credentials, sessions, Tailscale state |
-| `${APP_DATA_DIR}/data/workspace` | Workspace, memory, skills |
-| `${APP_DATA_DIR}/data/projects` | Projects directory |
+| `${APP_DATA_DIR}/data/workspace` | Workspace, memory, skills, projects |
 | `${APP_DATA_DIR}/data/claude` | Claude Code configuration |
 | `${APP_DATA_DIR}/data/wacli` | wacli WhatsApp data (auth, message history, contacts) |
 | `${APP_DATA_DIR}/data/gh` | GitHub CLI authentication and settings |
