@@ -50,6 +50,12 @@ RUN ARCH="$(dpkg --print-architecture)" \
 # Enable corepack for pnpm
 RUN corepack enable
 
+# Install bun globally
+RUN curl -fsSL https://bun.sh/install | bash \
+    && /root/.bun/bin/bun --version \
+    && rm -rf /root/.bun/install
+ENV PATH="/root/.bun/bin:${PATH}"
+
 WORKDIR /app
 ENV CI=true
 
@@ -69,6 +75,9 @@ RUN printf '#!/bin/sh\nexec node /app/dist/index.js "$@"\n' > /usr/local/bin/cla
 
 # Install Claude Code
 RUN npm install -g @anthropic-ai/claude-code
+
+# Install Codex CLI
+RUN npm install -g @openai/codex
 
 # Install agent-browser
 RUN npm install -g agent-browser \
