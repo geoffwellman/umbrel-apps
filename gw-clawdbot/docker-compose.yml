@@ -55,6 +55,7 @@ services:
       - ${APP_DATA_DIR}/data/config:/root/.clawdbot
       - ${APP_DATA_DIR}/data/workspace:/root/clawd
       - ${APP_DATA_DIR}/data/claude:/root/.claude
+      - ${APP_DATA_DIR}/data/codex:/root/.codex
       - ${APP_DATA_DIR}/data/wacli:/root/.wacli
       - ${APP_DATA_DIR}/data/gh:/root/.config/gh
     command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "18789", "--allow-unconfigured"]

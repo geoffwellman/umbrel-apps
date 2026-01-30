@@ -76,6 +76,9 @@ RUN printf '#!/bin/sh\nexec node /app/dist/index.js "$@"\n' > /usr/local/bin/cla
 # Install Claude Code
 RUN npm install -g @anthropic-ai/claude-code
 
+# Install Codex CLI
+RUN npm install -g @openai/codex
+
 # Install agent-browser
 RUN npm install -g agent-browser \
     && agent-browser install
