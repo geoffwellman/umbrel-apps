@@ -51,8 +51,8 @@ RUN ARCH="$(dpkg --print-architecture)" \
 RUN corepack enable
 
 # Install bun globally
-RUN curl -fsSL https://bun.sh/install | bash && \
-    ln -s /root/.bun/bin/bun /usr/local/bin/bun
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:${PATH}"
 
 WORKDIR /app
 ENV CI=true

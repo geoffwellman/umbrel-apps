@@ -19,6 +19,7 @@ Personal AI assistant for Umbrel. Connects to WhatsApp, Telegram, Discord, Slack
 | **Tailscale** | Remote access and Tailscale Serve |
 | **ripgrep** | Fast search |
 | **xvfb** | Virtual framebuffer for headless browsers |
+| **bun** | Fast JavaScript runtime and package manager |
 
 ## Building the Docker Image
 
