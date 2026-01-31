@@ -10,10 +10,10 @@ echo "=== OpenClaw Starting ==="
 echo "============================================"
 
 # Ensure config directory exists and set insecure auth for HTTP access
-mkdir -p "$HOME/.clawdbot"
+mkdir -p "$HOME/.openclaw"
 
-# The config file is clawdbot.json (not config.yml or config.json)
-CONFIG_FILE="$HOME/.clawdbot/clawdbot.json"
+# The config file is openclaw.json (not config.yml or config.json)
+CONFIG_FILE="$HOME/.openclaw/openclaw.json"
 
 # Only create if it doesn't exist (preserve user settings)
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -82,7 +82,7 @@ echo "============================================"
 
 # Read Tailscale auth key from env var OR from persistent config file
 # Config file survives updates: ~/umbrel/app-data/gw-clawdbot/data/config/tailscale.env
-TS_ENV_FILE="$HOME/.clawdbot/tailscale.env"
+TS_ENV_FILE="$HOME/.openclaw/tailscale.env"
 if [ -z "${TAILSCALE_AUTHKEY:-}" ] && [ -f "$TS_ENV_FILE" ]; then
     echo "Loading Tailscale config from $TS_ENV_FILE"
     . "$TS_ENV_FILE"
@@ -93,14 +93,14 @@ if [ -n "${TAILSCALE_AUTHKEY:-}" ]; then
     echo "Starting Tailscale (userspace mode)..."
     mkdir -p /var/run/tailscale
     # Clean up if previous run created state as a directory
-    if [ -d "/root/.clawdbot/tailscale.state" ]; then
-        rm -rf /root/.clawdbot/tailscale.state
+    if [ -d "/root/.openclaw/tailscale.state" ]; then
+        rm -rf /root/.openclaw/tailscale.state
     fi
     # Also clean up old directory-style state
-    if [ -d "/root/.clawdbot/tailscale" ]; then
-        rm -rf /root/.clawdbot/tailscale
+    if [ -d "/root/.openclaw/tailscale" ]; then
+        rm -rf /root/.openclaw/tailscale
     fi
-    tailscaled --state=/root/.clawdbot/tailscale.state --socket=/var/run/tailscale/tailscaled.sock --tun=userspace-networking &
+    tailscaled --state=/root/.openclaw/tailscale.state --socket=/var/run/tailscale/tailscaled.sock --tun=userspace-networking &
     sleep 3
     if tailscale up --authkey="$TAILSCALE_AUTHKEY" --hostname="${TAILSCALE_HOSTNAME:-clawdbot}" 2>&1; then
         echo "Tailscale: $(tailscale ip -4 2>/dev/null || echo 'connecting...')"
