@@ -27,10 +27,10 @@ description: >-
   - Works with Anthropic Claude, OpenAI, and local models
 developer: Peter Steinberger & Community
 website: https://clawd.bot
-repo: https://github.com/clawdbot/clawdbot
-support: https://github.com/clawdbot/clawdbot/discussions
+repo: https://github.com/openclaw/openclaw
+support: https://github.com/openclaw/openclaw/discussions
 gallery:
-  - https://raw.githubusercontent.com/clawdbot/clawdbot/main/docs/images/control-ui.png
+  - https://raw.githubusercontent.com/openclaw/openclaw/main/docs/images/control-ui.png
 releaseNotes: >-
   Initial Umbrel release. Includes gateway with Control UI, WhatsApp/Telegram/Discord
   support, browser automation, and Tailscale integration.

@@ -248,5 +248,5 @@ The full-featured image is approximately 2-3GB due to:
 ## Links
 
 - [Clawdbot Documentation](https://docs.clawd.bot)
-- [Clawdbot GitHub](https://github.com/clawdbot/clawdbot)
+- [Clawdbot GitHub](https://github.com/openclaw/openclaw)
 - [Clawdbot Discord](https://discord.gg/clawdbot)

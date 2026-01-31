@@ -77,7 +77,7 @@ ENV CI=true
 
 # Clone and build Clawdbot
 ARG CLAWDBOT_VERSION=main
-RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/clawdbot/clawdbot.git . \
+RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/openclaw/openclaw.git . \
     && pnpm install --frozen-lockfile \
     && pnpm build \
     && pnpm ui:install \
