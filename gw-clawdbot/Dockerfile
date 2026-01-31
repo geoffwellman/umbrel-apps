@@ -71,7 +71,6 @@ RUN ARCH="$(dpkg --print-architecture)" \
     && bun --version \
     && cd / \
     && rm -rf /tmp/bun-linux-*
-ENV PATH="/usr/local/bin:${PATH}"
 
 WORKDIR /app
 ENV CI=true
