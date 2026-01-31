@@ -1,4 +1,4 @@
-# Clawdbot Umbrel Image - Minimal build for faster deployment
+# OpenClaw Umbrel Image - Minimal build for faster deployment
 FROM node:22-bookworm-slim
 
 # Install essential dependencies only
@@ -75,7 +75,7 @@ RUN ARCH="$(dpkg --print-architecture)" \
 WORKDIR /app
 ENV CI=true
 
-# Clone and build Clawdbot
+# Clone and build OpenClaw
 ARG CLAWDBOT_VERSION=main
 RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/openclaw/openclaw.git . \
     && pnpm install --frozen-lockfile \

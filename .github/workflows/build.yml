@@ -30,9 +30,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Sync clawdbot version
+      - name: Sync OpenClaw version
         run: |
-          # Fetch latest clawdbot version from upstream package.json
+          # Fetch latest OpenClaw version from upstream package.json
           UPSTREAM_VERSION=$(curl -s https://raw.githubusercontent.com/openclaw/openclaw/main/package.json | jq -r '.version')
           CURRENT_VERSION=$(grep '^version:' gw-clawdbot/umbrel-app.yml | sed 's/version: *"\(.*\)"/\1/')
           echo "Upstream: $UPSTREAM_VERSION | Current: $CURRENT_VERSION"
@@ -41,7 +41,7 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add gw-clawdbot/umbrel-app.yml
-            git commit -m "Sync clawdbot version to $UPSTREAM_VERSION" || true
+            git commit -m "Sync OpenClaw version to $UPSTREAM_VERSION" || true
             git push || true
             echo "VERSION_UPDATED=true" >> $GITHUB_ENV
           fi

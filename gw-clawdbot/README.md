@@ -1,4 +1,4 @@
-# Clawdbot for Umbrel
+# OpenClaw for Umbrel
 
 Personal AI assistant for Umbrel. Connects to WhatsApp, Telegram, Discord, Slack, and more.
 
@@ -49,7 +49,7 @@ docker build -t clawdbot-umbrel:local .
 1. Fork this repo to your GitHub
 2. Update `docker-compose.yml` with your image name
 3. Add your repo as a community app store in Umbrel settings
-4. Install Clawdbot from the store
+4. Install OpenClaw from the store
 
 ### Option 2: Manual Installation
 
@@ -95,7 +95,7 @@ docker build -t clawdbot-umbrel:local .
 
 After installation:
 
-1. Open Clawdbot from your Umbrel dashboard
+1. Open OpenClaw from your Umbrel dashboard
 2. Go to Settings and enter your API key (Anthropic, OpenAI, etc.)
 3. Configure channels (WhatsApp, Telegram, etc.)
 
@@ -238,7 +238,7 @@ docker exec -it gw-clawdbot_gateway_1 ps aux | grep Xvfb
 ## Image Size
 
 The full-featured image is approximately 2-3GB due to:
-- Node.js + Clawdbot
+- Node.js + OpenClaw
 - Chromium browser
 - Go runtime (sag)
 - Python + Whisper
@@ -247,6 +247,6 @@ The full-featured image is approximately 2-3GB due to:
 
 ## Links
 
-- [Clawdbot Documentation](https://docs.clawd.bot)
-- [Clawdbot GitHub](https://github.com/openclaw/openclaw)
-- [Clawdbot Discord](https://discord.gg/clawdbot)
+- [OpenClaw Documentation](https://docs.openclaw.ai)
+- [OpenClaw GitHub](https://github.com/openclaw/openclaw)
+- [OpenClaw Discord](https://discord.gg/clawd)
