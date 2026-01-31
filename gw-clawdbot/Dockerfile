@@ -89,8 +89,8 @@ RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/openclaw
 RUN printf '#!/bin/sh\nexec node /app/dist/index.js "$@"\n' > /usr/local/bin/clawdbot \
     && chmod +x /usr/local/bin/clawdbot
 
-# Install Claude Code
-RUN npm install -g @anthropic-ai/claude-code
+# Install Claude Code using native install
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # Install Codex CLI
 RUN npm install -g @openai/codex
@@ -102,6 +102,7 @@ RUN npm install -g agent-browser \
 # Environment configuration
 ENV NODE_ENV=production
 ENV HOME=/root
+ENV PATH="/root/.local/bin:${PATH}"
 ENV CHROME_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
