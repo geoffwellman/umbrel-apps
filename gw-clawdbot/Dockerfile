@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
     iproute2 \
     ripgrep \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Tailscale
@@ -50,11 +51,27 @@ RUN ARCH="$(dpkg --print-architecture)" \
 # Enable corepack for pnpm
 RUN corepack enable
 
-# Install bun globally
-RUN curl -fsSL https://bun.sh/install | bash \
-    && /root/.bun/bin/bun --version \
-    && rm -rf /root/.bun/install
-ENV PATH="/root/.bun/bin:${PATH}"
+# Install bun globally with checksum verification
+# Using pinned version v1.3.8 for reproducibility and security
+ARG BUN_VERSION=1.3.8
+RUN ARCH="$(dpkg --print-architecture)" \
+    && case "${ARCH}" in \
+        amd64) BUN_ARCH='x64' ;; \
+        arm64) BUN_ARCH='aarch64' ;; \
+        *) echo "Unsupported architecture: ${ARCH}" && exit 1 ;; \
+    esac \
+    && cd /tmp \
+    && BUN_FILE="bun-linux-${BUN_ARCH}.zip" \
+    && curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/${BUN_FILE}" -o "${BUN_FILE}" \
+    && curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/SHASUMS256.txt" | grep "${BUN_FILE}" > "${BUN_FILE}.sha256" \
+    && sha256sum -c "${BUN_FILE}.sha256" \
+    && unzip "${BUN_FILE}" \
+    && mv "bun-linux-${BUN_ARCH}/bun" /usr/local/bin/bun \
+    && chmod +x /usr/local/bin/bun \
+    && bun --version \
+    && cd / \
+    && rm -rf /tmp/bun-linux-*
+ENV PATH="/usr/local/bin:${PATH}"
 
 WORKDIR /app
 ENV CI=true
