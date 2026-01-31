@@ -2,11 +2,11 @@
 set -e
 
 # =============================================================================
-# Clawdbot Entrypoint Script
+# OpenClaw Entrypoint Script
 # Handles xvfb for headless browser and optional services
 # =============================================================================
 
-echo "=== Clawdbot Starting ==="
+echo "=== OpenClaw Starting ==="
 echo "============================================"
 
 # Ensure config directory exists and set insecure auth for HTTP access

@@ -1,13 +1,13 @@
 manifestVersion: 1
 id: gw-clawdbot
-name: Clawdbot
+name: OpenClaw
 tagline: Your own personal AI assistant
 icon: https://raw.githubusercontent.com/geoffwellman/umbrel-apps/main/gw-clawdbot/icon.png
 category: ai
 version: "2026.1.29"
 port: 18789
 description: >-
-  Clawdbot is a personal AI assistant that connects to your messaging apps
+  OpenClaw is a personal AI assistant that connects to your messaging apps
   (WhatsApp, Telegram, Discord, Slack, Signal, and more). It runs locally on
   your Umbrel and gives you a private, always-on AI assistant.
   
@@ -26,11 +26,11 @@ description: >-
   
   - Works with Anthropic Claude, OpenAI, and local models
 developer: Peter Steinberger & Community
-website: https://clawd.bot
-repo: https://github.com/clawdbot/clawdbot
-support: https://github.com/clawdbot/clawdbot/discussions
+website: https://openclaw.ai
+repo: https://github.com/openclaw/openclaw
+support: https://github.com/openclaw/openclaw/discussions
 gallery:
-  - https://raw.githubusercontent.com/clawdbot/clawdbot/main/docs/images/control-ui.png
+  - https://raw.githubusercontent.com/openclaw/openclaw/main/docs/images/control-ui.png
 releaseNotes: >-
   Initial Umbrel release. Includes gateway with Control UI, WhatsApp/Telegram/Discord
   support, browser automation, and Tailscale integration.
