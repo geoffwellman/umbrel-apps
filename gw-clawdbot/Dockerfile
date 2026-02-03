@@ -33,7 +33,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | t
     && apt-get install -y gh \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Go, build wacli, then remove Go to minimize image size
+# Install Go, build wacli and obsidian-cli, then remove Go to minimize image size
 RUN ARCH="$(dpkg --print-architecture)" \
     && case "${ARCH}" in \
         amd64) GO_ARCH='amd64' ;; \
@@ -46,7 +46,11 @@ RUN ARCH="$(dpkg --print-architecture)" \
     && cd /tmp/wacli \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
     && cd / \
-    && rm -rf /tmp/wacli /usr/local/go /root/.cache/go-build /root/go
+    && git clone --depth 1 --branch v0.2.2 https://github.com/Yakitrak/obsidian-cli.git /tmp/obsidian-cli \
+    && cd /tmp/obsidian-cli \
+    && go build -o /usr/local/bin/obsidian-cli . \
+    && cd / \
+    && rm -rf /tmp/wacli /tmp/obsidian-cli /usr/local/go /root/.cache/go-build /root/go
 
 # Enable corepack for pnpm
 RUN corepack enable
