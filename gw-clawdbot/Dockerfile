@@ -41,9 +41,8 @@ RUN ARCH="$(dpkg --print-architecture)" \
     esac \
     && curl -fsSL "https://go.dev/dl/go1.23.5.linux-${GO_ARCH}.tar.gz" | tar -C /usr/local -xz \
     && export PATH="/usr/local/go/bin:${PATH}" \
-    && git clone https://github.com/moltbot/wacli.git /tmp/wacli \
+    && git clone https://github.com/steipete/wacli.git /tmp/wacli \
     && cd /tmp/wacli \
-    && git checkout cc6a7a3cd9dce3a723751564d4d6c73d825ddfde \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
     && cd / \
     && rm -rf /tmp/wacli /usr/local/go /root/.cache/go-build /root/go
@@ -85,9 +84,10 @@ RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/openclaw
     && pnpm prune --prod \
     && rm -rf /root/.npm /root/.cache /tmp/* .git
 
-# Link clawdbot CLI so the agent can run 'clawdbot' as a command
+# Link clawdbot and openclaw CLIs so the agent can run both commands
 RUN printf '#!/bin/sh\nexec node /app/dist/index.js "$@"\n' > /usr/local/bin/clawdbot \
-    && chmod +x /usr/local/bin/clawdbot
+    && chmod +x /usr/local/bin/clawdbot \
+    && ln -s /usr/local/bin/clawdbot /usr/local/bin/openclaw
 
 # Install Claude Code using native install
 RUN curl -fsSL https://claude.ai/install.sh | bash
