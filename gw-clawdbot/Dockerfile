@@ -41,7 +41,7 @@ RUN ARCH="$(dpkg --print-architecture)" \
     esac \
     && curl -fsSL "https://go.dev/dl/go1.23.5.linux-${GO_ARCH}.tar.gz" | tar -C /usr/local -xz \
     && export PATH="/usr/local/go/bin:${PATH}" \
-    && git clone https://github.com/steipete/wacli.git /tmp/wacli \
+    && git clone --depth 1 --branch v0.2.0 https://github.com/steipete/wacli.git /tmp/wacli \
     && cd /tmp/wacli \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
     && cd / \
