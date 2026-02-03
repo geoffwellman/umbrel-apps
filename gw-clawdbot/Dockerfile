@@ -45,10 +45,12 @@ RUN ARCH="$(dpkg --print-architecture)" \
     && git clone --depth 1 --branch v0.2.0 https://github.com/steipete/wacli.git /tmp/wacli \
     && cd /tmp/wacli \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
+    && chmod +x /usr/local/bin/wacli \
     && cd / \
     && git clone --depth 1 --branch v0.2.2 https://github.com/Yakitrak/obsidian-cli.git /tmp/obsidian-cli \
     && cd /tmp/obsidian-cli \
     && go build -o /usr/local/bin/obsidian-cli . \
+    && chmod +x /usr/local/bin/obsidian-cli \
     && cd / \
     && rm -rf /tmp/wacli /tmp/obsidian-cli /usr/local/go /root/.cache/go-build /root/go
 
