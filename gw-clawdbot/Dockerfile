@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iptables \
     iproute2 \
     ripgrep \
+    tmux \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -32,7 +33,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | t
     && apt-get install -y gh \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Go, build wacli, then remove Go to minimize image size
+# Install Go, build wacli and obsidian-cli, then remove Go to minimize image size
 RUN ARCH="$(dpkg --print-architecture)" \
     && case "${ARCH}" in \
         amd64) GO_ARCH='amd64' ;; \
@@ -41,12 +42,17 @@ RUN ARCH="$(dpkg --print-architecture)" \
     esac \
     && curl -fsSL "https://go.dev/dl/go1.23.5.linux-${GO_ARCH}.tar.gz" | tar -C /usr/local -xz \
     && export PATH="/usr/local/go/bin:${PATH}" \
-    && git clone https://github.com/moltbot/wacli.git /tmp/wacli \
+    && git clone --depth 1 --branch v0.2.0 https://github.com/steipete/wacli.git /tmp/wacli \
     && cd /tmp/wacli \
-    && git checkout cc6a7a3cd9dce3a723751564d4d6c73d825ddfde \
     && go build -tags sqlite_fts5 -o /usr/local/bin/wacli ./cmd/wacli \
+    && chmod +x /usr/local/bin/wacli \
     && cd / \
-    && rm -rf /tmp/wacli /usr/local/go /root/.cache/go-build /root/go
+    && git clone --depth 1 --branch v0.2.2 https://github.com/Yakitrak/obsidian-cli.git /tmp/obsidian-cli \
+    && cd /tmp/obsidian-cli \
+    && go build -o /usr/local/bin/obsidian-cli . \
+    && chmod +x /usr/local/bin/obsidian-cli \
+    && cd / \
+    && rm -rf /tmp/wacli /tmp/obsidian-cli /usr/local/go /root/.cache/go-build /root/go
 
 # Enable corepack for pnpm
 RUN corepack enable
@@ -85,9 +91,10 @@ RUN git clone --depth 1 --branch ${CLAWDBOT_VERSION} https://github.com/openclaw
     && pnpm prune --prod \
     && rm -rf /root/.npm /root/.cache /tmp/* .git
 
-# Link clawdbot CLI so the agent can run 'clawdbot' as a command
+# Link clawdbot and openclaw CLIs so the agent can run both commands
 RUN printf '#!/bin/sh\nexec node /app/dist/index.js "$@"\n' > /usr/local/bin/clawdbot \
-    && chmod +x /usr/local/bin/clawdbot
+    && chmod +x /usr/local/bin/clawdbot \
+    && ln -s /usr/local/bin/clawdbot /usr/local/bin/openclaw
 
 # Install Claude Code using native install
 RUN curl -fsSL https://claude.ai/install.sh | bash
